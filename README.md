@@ -1,8 +1,9 @@
 #  DigiEdu — Cổng Tài Liệu Học Tập Chuyển Tiếp & Góc Sách Học Đường
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Legal Compliance](https://img.shields.io/badge/IP%20Law-Điều%2025%20Tuân%20Thủ-green.svg)](docs/Legal-Compliance.md)
-[![Status: MVP](https://img.shields.io/badge/Status-Prototype%20Ready-blue.svg)](#)
+[![Legal Compliance](https://img.shields.io/badge/IP%20Law-%C4%90i%E1%BB%81u%2025%20Tu%C3%A2n%20Th%E1%BB%A7-green.svg)](docs/Legal-Compliance.md)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-blue.svg)](https://lenguyenthuha.github.io/digi-edu/)
+[![Status: Live](https://img.shields.io/badge/Status-Live%20on%20GitHub%20Pages-emerald.svg)](https://lenguyenthuha.github.io/digi-edu/)
 
 > **DigiEdu** là nền tảng số gọn nhẹ, hợp pháp và hoàn toàn miễn phí, giải quyết tình trạng thiếu sách giáo khoa cục bộ trong 2–4 tuần đầu năm học mà không vi phạm bản quyền hay làm gián đoạn việc học của học sinh.
 
