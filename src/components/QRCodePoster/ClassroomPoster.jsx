@@ -1,62 +1,56 @@
 import React, { useState } from 'react'
-import { QrCode, Printer, Sparkles, Smartphone, ShieldCheck, Download } from 'lucide-react'
+import { Printer } from 'lucide-react'
 
-export default function ClassroomPoster({ worksheets }) {
+export default function ClassroomPoster() {
   const [targetClass, setTargetClass] = useState('Lớp 8A1')
   const [targetGrade, setTargetGrade] = useState(8)
 
-  const currentUrl = typeof window !== 'undefined' ? window.location.origin : 'https://digiedu.edu.vn'
+  const currentUrl = typeof window !== 'undefined' ? window.location.origin : 'https://lenguyenthuha.github.io/digi-edu/'
   const qrTargetUrl = `${currentUrl}?grade=${targetGrade}&class=${encodeURIComponent(targetClass)}`
-
-  // Use reliable lightweight QR image API
-  const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=${encodeURIComponent(qrTargetUrl)}&color=1e3a8a`
+  const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(qrTargetUrl)}&color=1d1d1f`
 
   const handlePrint = () => {
     window.print()
   }
 
   return (
-    <div className="space-y-8">
-      {/* Intro Box */}
-      <div className="bg-gradient-to-br from-indigo-700 via-blue-800 to-indigo-950 rounded-3xl p-6 sm:p-10 text-white shadow-xl no-print">
-        <div className="max-w-2xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur border border-white/20 text-xs font-semibold text-indigo-200 mb-4">
-            <Smartphone className="w-3.5 h-3.5 text-yellow-300" />
-            <span>Tầng 3: Tiếp Cận Không Rào Cản (Zero-Barrier)</span>
-          </div>
-          <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
-            Poster Mã QR Dán Bảng Tin & Tường Lớp
-          </h1>
-          <p className="mt-3 text-sm sm:text-base text-indigo-100/90 leading-relaxed">
-            Giáo viên in poster dán trực tiếp tại cửa lớp hoặc bảng thông báo. Học sinh, phụ huynh chỉ cần mở Camera hoặc Zalo quét mã là có thể xem ngay phiếu học tập tuần 1–4 mà không cần tạo tài khoản.
-          </p>
-        </div>
-      </div>
+    <div className="space-y-12 max-w-4xl mx-auto">
+      {/* Intro */}
+      <section className="text-center pt-8 pb-4 max-w-xl mx-auto px-4 no-print">
+        <span className="text-[13px] font-semibold text-[#86868b] tracking-wider uppercase">
+          Tài liệu dán tường
+        </span>
+        <h1 className="text-3xl sm:text-5xl font-semibold text-[#1d1d1f] tracking-tight mt-2 mb-3">
+          Poster mã QR.
+        </h1>
+        <p className="text-[15px] sm:text-[17px] text-[#86868b] leading-relaxed">
+          Tạo và in poster mã QR để dán tại bảng tin hoặc cửa lớp học.
+        </p>
+      </section>
 
-      {/* Configuration bar */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm no-print flex flex-col sm:flex-row items-center justify-between gap-4">
+      {/* Control Bar */}
+      <div className="bg-white rounded-[18px] border border-black/[0.06] p-5 no-print flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex flex-wrap items-center gap-4 w-full sm:w-auto">
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1">
-              Chọn Lớp áp dụng:
+            <label className="block text-[12px] font-medium text-[#86868b] mb-1">
+              Tên lớp:
             </label>
             <input
               type="text"
               value={targetClass}
               onChange={(e) => setTargetClass(e.target.value)}
-              className="px-3 py-1.5 text-sm font-semibold border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500"
-              placeholder="VD: Lớp 8A1"
+              className="px-3.5 py-1.5 text-[14px] font-medium bg-[#f5f5f7] border border-black/[0.06] rounded-full focus:outline-none focus:border-[#0071e3]"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1">
+            <label className="block text-[12px] font-medium text-[#86868b] mb-1">
               Khối lớp:
             </label>
             <select
               value={targetGrade}
               onChange={(e) => setTargetGrade(Number(e.target.value))}
-              className="px-3 py-1.5 text-sm font-semibold border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 bg-white"
+              className="px-3.5 py-1.5 text-[14px] font-medium bg-[#f5f5f7] border border-black/[0.06] rounded-full focus:outline-none focus:border-[#0071e3]"
             >
               {[6, 7, 8, 9, 10, 11, 12].map(g => (
                 <option key={g} value={g}>Khối {g}</option>
@@ -67,69 +61,39 @@ export default function ClassroomPoster({ worksheets }) {
 
         <button
           onClick={handlePrint}
-          className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-xl shadow-md transition-all"
+          className="flex items-center gap-1.5 px-5 py-2 bg-[#0071e3] hover:bg-[#0077ed] text-white text-[13px] font-medium rounded-full transition-colors shadow-sm"
         >
-          <Printer className="w-4 h-4" />
-          In Poster A4 Ngay
+          <Printer className="w-3.5 h-3.5" />
+          In Poster (A4)
         </button>
       </div>
 
       {/* Printable Poster Canvas */}
-      <div className="print-area max-w-2xl mx-auto bg-white rounded-3xl border-2 border-slate-800 p-8 sm:p-12 shadow-2xl text-center relative overflow-hidden">
-        {/* Top Decorative Border */}
-        <div className="h-3 bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-500 absolute top-0 left-0 right-0"></div>
-
-        {/* Institution / Brand */}
-        <div className="flex items-center justify-center gap-2 mb-2">
-          <span className="px-3 py-1 rounded-full bg-blue-100 text-blue-900 text-xs font-extrabold tracking-wide uppercase">
-            HỆ THỐNG HỌC LIỆU CHUYỂN TIẾP DIGIEDU
+      <div className="print-area max-w-lg mx-auto bg-white rounded-[24px] border border-black/[0.1] p-10 sm:p-14 text-center space-y-6 shadow-sm">
+        <div>
+          <span className="text-[13px] font-semibold text-[#86868b] uppercase tracking-widest">
+            DIGIEDU
           </span>
+          <h2 className="text-2xl sm:text-3xl font-semibold text-[#1d1d1f] tracking-tight mt-1">
+            {targetClass} • Khối {targetGrade}
+          </h2>
+          <p className="text-[14px] text-[#6e6e73] mt-2">
+            Quét mã bằng Camera điện thoại hoặc Zalo để mở phiếu học tập và tủ sách lớp.
+          </p>
         </div>
 
-        <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mt-1">
-          GÓC TÀI LIỆU & SÁCH TƯƠNG TRỢ
-        </h2>
-        <div className="inline-block bg-slate-900 text-white font-bold text-base sm:text-lg px-6 py-1.5 rounded-full mt-2">
-          {targetClass.toUpperCase()} — KHỐI {targetGrade}
-        </div>
-
-        <p className="text-xs sm:text-sm text-slate-600 max-w-md mx-auto mt-4 leading-relaxed">
-          Quét mã QR dưới đây bằng <strong>Camera điện thoại</strong> hoặc <strong>Zalo</strong> để tải ngay Phiếu học tập tuần 1–4 và tra cứu số lượng sách giáo khoa cũ tại lớp.
-        </p>
-
-        {/* QR Code Container */}
-        <div className="my-8 inline-block p-5 bg-white rounded-2xl border-4 border-slate-900 shadow-lg">
+        {/* QR Frame */}
+        <div className="inline-block p-4 bg-white rounded-[20px] border border-black/[0.08] shadow-sm">
           <img
             src={qrImageUrl}
-            alt={`Mã QR truy cập tài liệu ${targetClass}`}
+            alt={`Mã QR ${targetClass}`}
             className="w-56 h-56 mx-auto object-contain"
           />
-          <span className="block mt-2 text-[11px] font-bold text-slate-800 tracking-wider">
-            QUÉT ĐỂ HỌC NGAY • KHÔNG CẦN TÀI KHOẢN
-          </span>
         </div>
 
-        {/* Instructions Steps */}
-        <div className="grid grid-cols-3 gap-2 text-left bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs">
-          <div>
-            <span className="font-extrabold text-blue-700 block">Bước 1</span>
-            <span className="text-slate-600 text-[11px]">Mở camera hoặc Zalo quét mã</span>
-          </div>
-          <div>
-            <span className="font-extrabold text-blue-700 block">Bước 2</span>
-            <span className="text-slate-600 text-[11px]">Chọn môn học cần ôn tập</span>
-          </div>
-          <div>
-            <span className="font-extrabold text-blue-700 block">Bước 3</span>
-            <span className="text-slate-600 text-[11px]">Xem bài hoặc in phiếu làm bài</span>
-          </div>
-        </div>
-
-        {/* Footer Legal Watermark */}
-        <div className="mt-8 pt-4 border-t border-slate-200 text-[10px] text-slate-500 flex items-center justify-center gap-1.5">
-          <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-          <span>Vận hành theo Điều 25 Luật SHTT Việt Nam. Tài liệu giáo dục phi thương mại.</span>
-        </div>
+        <p className="text-[12px] text-[#86868b]">
+          digiedu.edu.vn
+        </p>
       </div>
     </div>
   )

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Navbar from './components/Common/Navbar'
 import Footer from './components/Common/Footer'
-import LegalModal from './components/Common/LegalModal'
 import WorksheetHub from './components/Worksheets/WorksheetHub'
 import BookSharingCorner from './components/BookCorner/BookSharingCorner'
 import ClassroomPoster from './components/QRCodePoster/ClassroomPoster'
@@ -10,23 +9,19 @@ import { storageService } from './services/storageService'
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('worksheets')
-  const [isLegalModalOpen, setIsLegalModalOpen] = useState(false)
   const [worksheets, setWorksheets] = useState([])
   const [inventories, setInventories] = useState([])
 
-  // Load initial data
   useEffect(() => {
     setWorksheets(storageService.getWorksheets())
     setInventories(storageService.getInventories())
 
-    // Handle QR URL params if any
     const params = new URLSearchParams(window.location.search)
     if (params.get('tab')) {
       setActiveTab(params.get('tab'))
     }
   }, [])
 
-  // Handlers
   const handleAddWorksheet = (newWs) => {
     const updated = storageService.saveWorksheet(newWs)
     setWorksheets(updated)
@@ -56,14 +51,13 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800">
+    <div className="min-h-screen flex flex-col bg-[#fbfbfd] text-[#1d1d1f]">
       <Navbar 
         activeTab={activeTab} 
         setActiveTab={setActiveTab} 
-        onOpenLegalModal={() => setIsLegalModalOpen(true)}
       />
 
-      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+      <main className="flex-1 max-w-5xl mx-auto px-4 sm:px-6 py-6 w-full">
         {activeTab === 'worksheets' && (
           <WorksheetHub worksheets={worksheets} />
         )}
@@ -77,7 +71,7 @@ export default function App() {
         )}
 
         {activeTab === 'qr' && (
-          <ClassroomPoster worksheets={worksheets} />
+          <ClassroomPoster />
         )}
 
         {activeTab === 'admin' && (
@@ -89,12 +83,7 @@ export default function App() {
         )}
       </main>
 
-      <Footer onOpenLegalModal={() => setIsLegalModalOpen(true)} />
-
-      <LegalModal 
-        isOpen={isLegalModalOpen} 
-        onClose={() => setIsLegalModalOpen(false)} 
-      />
+      <Footer />
     </div>
   )
 }

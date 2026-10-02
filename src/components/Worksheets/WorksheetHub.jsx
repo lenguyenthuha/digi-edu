@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react'
 import WorksheetCard from './WorksheetCard'
 import WorksheetViewModal from './WorksheetViewModal'
-import { Search, Filter, BookOpen, Sparkles, CheckCircle2 } from 'lucide-react'
+import { Search } from 'lucide-react'
 
 export default function WorksheetHub({ worksheets }) {
   const [selectedGrade, setSelectedGrade] = useState('ALL')
@@ -11,13 +11,13 @@ export default function WorksheetHub({ worksheets }) {
   const [activeWorksheet, setActiveWorksheet] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  // Extract unique subjects from worksheets
+  const grades = ['ALL', '6', '7', '8', '9', '10', '11', '12']
+
   const subjects = useMemo(() => {
     const set = new Set(worksheets.map(w => w.subject))
     return ['ALL', ...Array.from(set)]
   }, [worksheets])
 
-  // Filtered worksheets
   const filteredWorksheets = useMemo(() => {
     return worksheets.filter(w => {
       const matchGrade = selectedGrade === 'ALL' || w.grade === Number(selectedGrade)
@@ -44,157 +44,116 @@ export default function WorksheetHub({ worksheets }) {
   }
 
   return (
-    <div className="space-y-8">
-      {/* Hero Welcome Banner */}
-      <div className="bg-gradient-to-br from-blue-700 via-indigo-700 to-blue-900 rounded-3xl p-6 sm:p-10 text-white shadow-xl relative overflow-hidden">
-        <div className="relative z-10 max-w-2xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur border border-white/20 text-xs font-semibold text-blue-200 mb-4">
-            <Sparkles className="w-3.5 h-3.5 text-yellow-300" />
-            <span>Tầng 1: Học Liệu Chuyển Tiếp Tuần 1–4</span>
-          </div>
-          <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
-            Phiếu Học Tập Tinh Gọn — Không Lo Thiếu Sách
-          </h1>
-          <p className="mt-3 text-sm sm:text-base text-blue-100/90 leading-relaxed">
-            Tóm tắt kiến thức trọng tâm và bài tập cơ bản 2–3 trang do các tổ chuyên môn nhà trường biên soạn. Học sinh, phụ huynh tự do truy cập, xem và in ấn mà không cần tài khoản.
-          </p>
+    <div className="space-y-12">
+      {/* Apple-style Quiet Hero Section */}
+      <section className="text-center pt-8 pb-4 max-w-2xl mx-auto px-4">
+        <span className="text-[13px] font-semibold text-[#86868b] tracking-wider uppercase">
+          Học liệu chuyển tiếp
+        </span>
+        <h1 className="text-3xl sm:text-5xl font-semibold text-[#1d1d1f] tracking-tight mt-2 mb-3">
+          Tài liệu tuần 1–4.
+        </h1>
+        <p className="text-[15px] sm:text-[17px] text-[#86868b] leading-relaxed">
+          Tóm tắt kiến thức cốt lõi và bài tập cơ bản cho các tuần đầu năm học.
+        </p>
 
-          <div className="mt-6 flex flex-wrap gap-4 text-xs font-medium text-blue-200">
-            <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-              Không rào cản đăng nhập
-            </span>
-            <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-              Tuân thủ Điều 25 Luật SHTT
-            </span>
-            <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-              Hỗ trợ in ấn chuẩn A4
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Filter and Search Bar */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-4">
-        {/* Search input */}
-        <div className="relative">
-          <Search className="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+        {/* Spotlight Search Bar */}
+        <div className="relative mt-8 max-w-lg mx-auto">
+          <Search className="w-4 h-4 text-[#86868b] absolute left-4 top-1/2 -translate-y-1/2" />
           <input
             type="text"
-            placeholder="Tìm theo tên bài học, môn học hoặc từ khóa kiến thức..."
+            placeholder="Tìm theo môn học, khối lớp hoặc bài học..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-11 pr-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-sm"
+            className="w-full pl-11 pr-4 py-3 rounded-full bg-white border border-black/[0.08] shadow-sm text-[14px] text-[#1d1d1f] placeholder-[#86868b] focus:outline-none focus:ring-2 focus:ring-[#0071e3]/20 focus:border-[#0071e3] transition-all"
           />
         </div>
+      </section>
 
-        {/* Filter Badges */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-          {/* Grade */}
-          <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1.5">
-              Khối lớp
-            </label>
-            <select
-              value={selectedGrade}
-              onChange={(e) => setSelectedGrade(e.target.value)}
-              className="w-full px-3 py-2 text-xs font-medium bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500"
+      {/* Segmented Filter Controls */}
+      <section className="space-y-4 max-w-5xl mx-auto">
+        {/* Grade Pills */}
+        <div className="flex items-center justify-center flex-wrap gap-1.5">
+          {grades.map(g => (
+            <button
+              key={g}
+              onClick={() => setSelectedGrade(g)}
+              className={`px-3.5 py-1.5 rounded-full text-[13px] transition-all ${
+                selectedGrade === g
+                  ? 'bg-[#1d1d1f] text-white font-medium shadow-sm'
+                  : 'bg-black/[0.03] text-[#6e6e73] hover:text-[#1d1d1f] hover:bg-black/[0.06]'
+              }`}
             >
-              <option value="ALL">Tất cả khối lớp (6-12)</option>
-              <option value="6">Khối 6</option>
-              <option value="7">Khối 7</option>
-              <option value="8">Khối 8</option>
-              <option value="9">Khối 9</option>
-              <option value="10">Khối 10</option>
-              <option value="11">Khối 11</option>
-              <option value="12">Khối 12</option>
-            </select>
-          </div>
-
-          {/* Subject */}
-          <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1.5">
-              Môn học
-            </label>
-            <select
-              value={selectedSubject}
-              onChange={(e) => setSelectedSubject(e.target.value)}
-              className="w-full px-3 py-2 text-xs font-medium bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500"
-            >
-              {subjects.map(s => (
-                <option key={s} value={s}>
-                  {s === 'ALL' ? 'Tất cả môn học' : s}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Week */}
-          <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1.5">
-              Tuần học chuyển tiếp
-            </label>
-            <select
-              value={selectedWeek}
-              onChange={(e) => setSelectedWeek(e.target.value)}
-              className="w-full px-3 py-2 text-xs font-medium bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500"
-            >
-              <option value="ALL">Tất cả các tuần (1 - 4)</option>
-              <option value="1">Tuần 1</option>
-              <option value="2">Tuần 2</option>
-              <option value="3">Tuần 3</option>
-              <option value="4">Tuần 4</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      {/* Results Header */}
-      <div className="flex items-center justify-between">
-        <h2 className="text-base font-bold text-slate-800 flex items-center gap-2">
-          <BookOpen className="w-5 h-5 text-blue-600" />
-          Danh sách phiếu học tập ({filteredWorksheets.length} tài liệu)
-        </h2>
-        {(selectedGrade !== 'ALL' || selectedSubject !== 'ALL' || selectedWeek !== 'ALL' || searchQuery) && (
-          <button
-            onClick={() => {
-              setSelectedGrade('ALL')
-              setSelectedSubject('ALL')
-              setSelectedWeek('ALL')
-              setSearchQuery('')
-            }}
-            className="text-xs text-blue-600 hover:underline font-medium"
-          >
-            Đặt lại bộ lọc
-          </button>
-        )}
-      </div>
-
-      {/* Worksheet Cards Grid */}
-      {filteredWorksheets.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {filteredWorksheets.map((ws) => (
-            <WorksheetCard
-              key={ws.id}
-              worksheet={ws}
-              onView={handleView}
-              onPrint={handlePrint}
-            />
+              {g === 'ALL' ? 'Tất cả khối' : `Khối ${g}`}
+            </button>
           ))}
         </div>
-      ) : (
-        <div className="bg-white rounded-2xl border border-dashed border-slate-300 p-12 text-center">
-          <BookOpen className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-          <h3 className="text-base font-bold text-slate-700">Chưa tìm thấy phiếu học tập phù hợp</h3>
-          <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
-            Vui lòng thử chọn khối lớp khác hoặc tìm kiếm với từ khóa tổng quát hơn.
-          </p>
-        </div>
-      )}
 
-      {/* Modal Detail / Print */}
+        {/* Secondary filters (Subject & Week) */}
+        <div className="flex items-center justify-center gap-3 text-[13px]">
+          <select
+            value={selectedSubject}
+            onChange={(e) => setSelectedSubject(e.target.value)}
+            className="bg-white border border-black/[0.08] text-[#1d1d1f] px-3.5 py-1.5 rounded-full focus:outline-none focus:border-[#0071e3]"
+          >
+            <option value="ALL">Tất cả môn học</option>
+            {subjects.filter(s => s !== 'ALL').map(s => (
+              <option key={s} value={s}>{s}</option>
+            ))}
+          </select>
+
+          <select
+            value={selectedWeek}
+            onChange={(e) => setSelectedWeek(e.target.value)}
+            className="bg-white border border-black/[0.08] text-[#1d1d1f] px-3.5 py-1.5 rounded-full focus:outline-none focus:border-[#0071e3]"
+          >
+            <option value="ALL">Tất cả các tuần (1–4)</option>
+            <option value="1">Tuần 1</option>
+            <option value="2">Tuần 2</option>
+            <option value="3">Tuần 3</option>
+            <option value="4">Tuần 4</option>
+          </select>
+
+          {(selectedGrade !== 'ALL' || selectedSubject !== 'ALL' || selectedWeek !== 'ALL' || searchQuery) && (
+            <button
+              onClick={() => {
+                setSelectedGrade('ALL')
+                setSelectedSubject('ALL')
+                setSelectedWeek('ALL')
+                setSearchQuery('')
+              }}
+              className="text-[#0071e3] hover:underline text-[12px] font-medium"
+            >
+              Xóa bộ lọc
+            </button>
+          )}
+        </div>
+      </section>
+
+      {/* Worksheet Cards Grid */}
+      <section className="max-w-5xl mx-auto">
+        {filteredWorksheets.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {filteredWorksheets.map((ws) => (
+              <WorksheetCard
+                key={ws.id}
+                worksheet={ws}
+                onView={handleView}
+                onPrint={handlePrint}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="bg-white rounded-[18px] border border-black/[0.06] p-12 text-center max-w-md mx-auto">
+            <p className="text-[15px] font-medium text-[#1d1d1f]">Không tìm thấy bài học phù hợp</p>
+            <p className="text-[13px] text-[#86868b] mt-1">
+              Thử tìm kiếm từ khóa khác hoặc xóa bộ lọc để hiển thị toàn bộ tài liệu.
+            </p>
+          </div>
+        )}
+      </section>
+
+      {/* Reader / Print Modal */}
       <WorksheetViewModal
         worksheet={activeWorksheet}
         isOpen={isModalOpen}
